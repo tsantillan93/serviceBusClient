@@ -51,28 +51,10 @@ public static void main(String[] args) throws Exception {
 //    }
   }
   
-//  public static void displayMessages1 () {
-//       MessagingFactory factory = MessagingFactory.Create(uri, tokenProvider);
-//       MessageReceiver receiver = factory.CreateMessageReceiver($"{subscription}");// topicname/subscriptions/nameoffilter
-//       BrokeredMessage receivedMessage = receiver.Receive();
-//           Stream msgStream = receivedMessage.GetBody<Stream>();
-//           StreamReader sr = new StreamReader(msgStream);
-//           string topicBodyStream = sr.ReadToEnd();
-//           var topicBody = JsonConvert.DeserializeObject<dynamic>(topicBodyStream);MessagingFactory factory = MessagingFactory.Create(uri, tokenProvider);
-//           MessageReceiver receiver = factory.CreateMessageReceiver($"{subscription}");// topicname/subscriptions/nameoffilter
-//           BrokeredMessage receivedMessage = receiver.Receive();
-//               var msgStream = receivedMessage.GetBody<Stream>();
-//              StreamReader sr = new StreamReader(msgStream);
-//               string topicBodyStream = sr.ReadToEnd();
-//               var topicBody = JsonConvert.DeserializeObject<dynamic>(topicBodyStream);
-//  }
   public String ConnectionString = "Endpoint=sb://sbx-omnichannel-servicebus.servicebus.windows.net/;SharedAccessKeyName=cpu-dashboard-listener;SharedAccessKey=NV8FH0FVY/DcZ1GDdwvpdp9LOvGisdFaFElbi/AX7FI=;EntityPath=cpu-neworder-details";
   public String TopicName = "cpu-neworder-details";
-  static final String[] Subscriptions = {"getpayload-thomas"};
-  static final String[] Store = {"Store1","Store2","Store3","Store4","Store5","Store6","Store7","Store8","Store9","Store10"};
-  static final String SysField = "sys.To";
-  static final String CustomField = "StoreId";    
-  int NrOfMessagesPerStore = 1; // Send at least 1.
+  static final String[] Subscriptions = {"getpayload-thomas"};    
+
   public void receiveAllMessages() throws Exception {     
            System.out.printf("\nStart Receiving Messages.\n");
 
@@ -101,24 +83,38 @@ public static void main(String[] args) throws Exception {
                   IMessage receivedMessage = subscriptionClient.receive(Duration.ofSeconds(1));
                    if (receivedMessage != null)
                    {
-                       if ( receivedMessage.getProperties() != null ) {                                                                                
-                           System.out.printf("Date Created=%s\n", receivedMessage.getProperties().get("CreateTSUTC"));                                                                                          
-
-                           // Show the label modified by the rule action
-                           if(receivedMessage.getLabel() != null)
-                               System.out.printf("Label=%s\n", receivedMessage.getLabel());   
-                       }
+//                       if ( receivedMessage.getProperties() != null ) {                                                                                
+//                           System.out.printf("Date Created=%s\n", receivedMessage.getProperties().get("CreateTSUTC"));                                                                                          
+//
+//                           // Show the label modified by the rule action
+//                           if(receivedMessage.getLabel() != null)
+//                               System.out.printf("Label=%s\n", receivedMessage.getLabel());   
+//                       }
 
                        byte[] body = receivedMessage.getBody();
-                       //Item theItem = GSON.fromJson(new String(body, UTF_8), Item.class);
-                       System.out.println(new String(body));
+
+                       
                        
                        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();  
                        DocumentBuilder builder;  
                        try {  
                            builder = factory.newDocumentBuilder();  
-                           Document document = builder.parse(new InputSource(new StringReader(new String(body))));  
-                           System.out.println(((Element)document.getElementsByTagName("NS1:HeaderInfo").item(0)).getAttribute("StoreNo"));
+                           Document document = builder.parse(new InputSource(new StringReader(new String(body)))); 
+                           String countryCode, ebuNumber, orderNumber, scheduledTime, fulfillmentDate;
+                           
+                           Element headerInfo = (Element) document.getElementsByTagName("NS1:HeaderInfo").item(0);
+                           countryCode = headerInfo.getAttribute("CountryCode");
+                           ebuNumber = headerInfo.getAttribute("StoreNo");
+                           orderNumber = ((Element)document.getElementsByTagName("NS1:OrderNumber").item(0)).getTextContent();
+                           scheduledTime = ((Element)document.getElementsByTagName("NS1:ScheduleTimeSlot").item(0)).getTextContent();
+                           fulfillmentDate = ((Element)document.getElementsByTagName("NS1:FulfillmentDate").item(0)).getTextContent();
+                           
+                           
+                           System.out.println("countryCode : "+countryCode+
+                        		   			  	 "\nebuNbr : "+ebuNumber+
+                        		   			   "\norderNbr : "+orderNumber+
+                        		   	  "\nscheduledTimeSlot : "+scheduledTime+
+                        		   	    "\nfulfillmentDate : "+fulfillmentDate+"\n" );
                        } catch (Exception e) {  
                            e.printStackTrace();  
                        } 
