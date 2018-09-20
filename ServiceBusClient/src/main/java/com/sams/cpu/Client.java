@@ -58,9 +58,9 @@ public static void main(String[] args) throws Exception {
 //               string topicBodyStream = sr.ReadToEnd();
 //               var topicBody = JsonConvert.DeserializeObject<dynamic>(topicBodyStream);
 //  }
-  public String ConnectionString = "Endpoint=sb://sbx-omnichannel-servicebus.servicebus.windows.net/;SharedAccessKeyName=cpu-dashboard-listener;SharedAccessKey=NV8FH0FVY/DcZ1GDdwvpdp9LOvGisdFaFElbi/AX7FI=;EntityPath=cpu-neworder-details";
-  public String TopicName = "cpu-neworder-details";
-  static final String[] Subscriptions = {"getpayload"};
+  public String ConnectionString = "Endpoint=sb://sbx-omnichannel-servicebus.servicebus.windows.net/;SharedAccessKeyName=cpu-dashboard-dev;SharedAccessKey=/zUZdHjpEeSSW8Nv6HBolGtkX/d3mn9i2CDGPG4+1Cc=;EntityPath=cpu-neworder-keys";
+  public String TopicName = "cpu-neworder-keys";
+  static final String[] Subscriptions = {"getkeys"};
   static final String[] Store = {"Store1","Store2","Store3","Store4","Store5","Store6","Store7","Store8","Store9","Store10"};
   static final String SysField = "sys.To";
   static final String CustomField = "StoreId";    
