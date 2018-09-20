@@ -94,7 +94,7 @@ public static void main(String[] args) throws Exception {
                    if (receivedMessage != null)
                    {
                        if ( receivedMessage.getProperties() != null ) {                                                                                
-                           System.out.printf("StoreId=%s\n", receivedMessage.getProperties().get("StoreId"));                                                                                          
+                           System.out.printf("Date Created=%s\n", receivedMessage.getProperties().get("CreateTSUTC"));                                                                                          
 
                            // Show the label modified by the rule action
                            if(receivedMessage.getLabel() != null)
