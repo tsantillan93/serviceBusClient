@@ -1,6 +1,14 @@
 package com.sams.cpu;
+import java.io.StringReader;
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
 
 import com.microsoft.azure.servicebus.ClientFactory;
 import com.microsoft.azure.servicebus.IMessage;
@@ -103,7 +111,18 @@ public static void main(String[] args) throws Exception {
 
                        byte[] body = receivedMessage.getBody();
                        //Item theItem = GSON.fromJson(new String(body, UTF_8), Item.class);
-                       System.out.println(body);
+                       System.out.println(new String(body));
+                       
+                       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();  
+                       DocumentBuilder builder;  
+                       try {  
+                           builder = factory.newDocumentBuilder();  
+                           Document document = builder.parse(new InputSource(new StringReader(new String(body))));  
+                           System.out.println(((Element)document.getElementsByTagName("NS1:HeaderInfo").item(0)).getAttribute("StoreNo"));
+                       } catch (Exception e) {  
+                           e.printStackTrace();  
+                       } 
+                    
                        subscriptionClient.complete(receivedMessage.getLockToken());
                        receivedMessages++;
                    }
