@@ -53,7 +53,7 @@ public static void main(String[] args) throws Exception {
   
   public String ConnectionString = "Endpoint=sb://sbx-omnichannel-servicebus.servicebus.windows.net/;SharedAccessKeyName=cpu-dashboard-listener;SharedAccessKey=NV8FH0FVY/DcZ1GDdwvpdp9LOvGisdFaFElbi/AX7FI=;EntityPath=cpu-neworder-details";
   public String TopicName = "cpu-neworder-details";
-  static final String[] Subscriptions = {"getpayload-thomas"};    
+  static final String[] Subscriptions = {"cpu-getpayload-ethanconner"};    
 
   public void receiveAllMessages() throws Exception {     
            System.out.printf("\nStart Receiving Messages.\n");
