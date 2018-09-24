@@ -67,7 +67,7 @@ public class Client implements MessageListener {
         Hashtable<String, String> env = new Hashtable<String, String>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, 
                    "org.apache.qpid.amqp_1_0.jms.jndi.PropertiesFileInitialContextFactory");
-        env.put(Context.PROVIDER_URL, "servicebus.properties");
+        env.put(Context.PROVIDER_URL, "src/main/resources/servicebus.properties");
         Context context = new InitialContext(env);
 
         // Look up ConnectionFactory and Queue
