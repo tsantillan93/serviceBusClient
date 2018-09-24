@@ -64,6 +64,24 @@
                      <artifactId>azure-management</artifactId>
                      <version>0.6.0</version>
               </dependency>
+              
+              <dependency>
+                <groupId>org.apache.qpid</groupId>
+                <artifactId>qpid-amqp-1-0-client-jms</artifactId>
+                <version>0.32</version>
+              </dependency>
+              
+              <dependency>
+			     <groupId>org.apache.qpid</groupId>
+			     <artifactId>qpid-client</artifactId>
+			     <version>6.3.3</version>
+			  </dependency>
+			  <dependency>
+			     <groupId>org.apache.geronimo.specs</groupId>
+			     <artifactId>geronimo-jms_1.1_spec</artifactId>
+			     <version>1.0</version>
+			  </dependency>
+              
   </dependencies>
 </project>
 
