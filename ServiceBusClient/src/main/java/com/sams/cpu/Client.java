@@ -32,7 +32,7 @@ public class Client implements MessageListener {
  
   public String ConnectionString = "Endpoint=sb://sbx-omnichannel-servicebus.servicebus.windows.net/;SharedAccessKeyName=cpu-dashboard-listener;SharedAccessKey=NV8FH0FVY/DcZ1GDdwvpdp9LOvGisdFaFElbi/AX7FI=;EntityPath=cpu-neworder-details";
   public String TopicName = "cpu-neworder-details";
-  static final String[] Subscriptions = {"cpu-getpayload-ethanconner"};   
+  static final String[] Subscriptions = {"getpayload-test"};   
   
   private static boolean runReceiver = true;
   private Connection connection;
@@ -72,7 +72,7 @@ public class Client implements MessageListener {
 
         // Look up ConnectionFactory and Queue
         ConnectionFactory cf = (ConnectionFactory) context.lookup("TESTBUS");
-        Destination queue = (Destination) context.lookup("TOPIC");
+        Destination queue = (Destination) context.lookup("SUBSCRIPTION");
 
         // Create Connection
         connection = cf.createConnection();
@@ -89,6 +89,8 @@ public class Client implements MessageListener {
     public void onMessage(Message message) {
         try {
             System.out.println("Received message with JMSMessageID = " + message.getJMSMessageID());
+            String msgBody = ((TextMessage) message).getText();
+            System.out.println("Received message with Message = " + msgBody);
             message.acknowledge();
         } catch (Exception e) {
             e.printStackTrace();
